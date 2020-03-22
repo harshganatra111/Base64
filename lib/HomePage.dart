@@ -1,5 +1,6 @@
+import 'package:Base64/Decoder.dart';
 import 'package:flutter/material.dart';
-
+import 'Encoder.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -11,7 +12,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Base 64"),
-        backgroundColor: Color.fromRGBO(0 , 0, 55, 0.8),
+        backgroundColor: Color.fromRGBO(0 , 0, 55, 1.0),
       
       ),
       body: Center(
@@ -25,10 +26,11 @@ class _HomePageState extends State<HomePage> {
               width: 200.0,
               height: 100.0,
               child: new RaisedButton(
+                
                 child: new Text('Encoder'),
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-
+                    return Encoder();
                   }));
                 },
               ),
@@ -39,7 +41,11 @@ class _HomePageState extends State<HomePage> {
               height: 100.0,
               child: new RaisedButton(
                 child: new Text('Decoder'),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return Decoder();
+                  }));
+                },
               ),
             ),
           ],
