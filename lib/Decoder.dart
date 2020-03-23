@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:toast/toast.dart';
+
 
 class Decoder extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _DecoderState extends State<Decoder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Encoder"),
+        title: Text("Decoder"),
         backgroundColor: Color.fromRGBO(0 , 0, 55, 1.0),
       ),
       body: Center(
@@ -49,23 +51,29 @@ class _DecoderState extends State<Decoder> {
             Padding(padding: EdgeInsets.all(10),),
             RaisedButton(
               onPressed: (){
-                print(inputText.text);
-                String retEncTxt = encode(inputText.text);
-                print(retEncTxt);
-                 setState((){
+                
+                String retEncTxt = decode(inputText.text);
+                Toast.show("Text Decoded", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                decTxt.clear();
+                setState((){
                   decTxt.text = decodedText;
                 });
               },
               child: Text("Decode"),
-
             ),
             RaisedButton(
               
               child: Text('Copy'),
               onPressed: (){
-                                  Clipboard.setData(new ClipboardData(text: decodedText));
+                    if(decodedText.isEmpty){
+                                 Toast.show("Field is empty", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
 
-               
+                }
+                else{
+                  Clipboard.setData(new ClipboardData(text: decodedText));
+               Toast.show("Decoded text copied", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                
+                }
                 },
             ),
           ],
@@ -73,7 +81,7 @@ class _DecoderState extends State<Decoder> {
       ),
     );
   }
-  String encode(String inp){
+  String decode(String inp){
     String credentials = inp;
 Codec<String, String> stringToBase64 = utf8.fuse(base64);
  decodedText = stringToBase64.decode(credentials);

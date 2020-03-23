@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
+import 'package:toast/toast.dart';
 import 'package:flutter/services.dart';
 
 class Encoder extends StatefulWidget {
@@ -51,23 +51,29 @@ class _EncoderState extends State<Encoder> {
             Padding(padding: EdgeInsets.all(10),),
             RaisedButton(
               onPressed: (){
-                print(inputText.text);
+                
                 String retEncTxt = encode(inputText.text);
-                print(retEncTxt);
+                Toast.show("Text Encoded", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+              
+                encTxt.clear();
                  setState((){
                   encTxt.text = encodedText;
                 });
               },
               child: Text("Encode"),
-
             ),
             RaisedButton(
-              
               child: Text('Copy'),
               onPressed: (){
+                if(encodedText.isEmpty){
+                                 Toast.show("Field is empty", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+
+                }
+                else{
+                  Clipboard.setData(new ClipboardData(text: encodedText));
+               Toast.show("Encoded text copied", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
                 
-                Clipboard.setData(new ClipboardData(text: encodedText));
-               
+                }
                 },
             ),
           ],
